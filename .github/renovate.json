@@ -1,7 +1,8 @@
 {
 	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
 	"extends": [
-		"config:base",
+		"mergeConfidence:all-badges",
+		"config:recommended",
 		":dependencyDashboard",
 		":timezone(Etc/UTC)",
 		":preserveSemverRanges"
@@ -10,7 +11,9 @@
 	"rebaseWhen": "conflicted",
 	"packageRules": [
 		{
-			"description": "Auto update the Git submodules of this repository and auto merge the branches",
+			"description": [
+				"Auto update the Git submodules of this repository and auto merge the branches"
+			],
 			"matchManagers": [
 				"git-submodules"
 			],
@@ -19,10 +22,15 @@
 			],
 			"automerge": true,
 			"ignoreTests": true,
-			"automergeType": "branch"
+			"automergeType": "branch",
+			"matchUpdateTypes": [
+				"digest"
+			]
 		},
 		{
-			"description": "Add the ci and github-actions GitHub label to GitHub Action bump PRs",
+			"description": [
+				"Add the ci and github-actions GitHub label to GitHub Action bump PRs"
+			],
 			"matchManagers": [
 				"github-actions"
 			],
@@ -32,7 +40,9 @@
 			]
 		},
 		{
-			"description": "Add the pip and dependencies GitHub label to requirements bump PRs",
+			"description": [
+				"Add the pip and dependencies GitHub label to requirements bump PRs"
+			],
 			"matchManagers": [
 				"pip_requirements"
 			],
