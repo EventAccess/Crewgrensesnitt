@@ -1,2 +1,4 @@
 *.py[ocd]
 *.sqlite3
+.env
+!example.env
