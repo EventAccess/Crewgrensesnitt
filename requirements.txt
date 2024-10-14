@@ -1,1 +1,1 @@
-Django[all] ==5.1.2
+Django[all]==5.1.2
