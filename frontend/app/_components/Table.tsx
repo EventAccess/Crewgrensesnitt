@@ -1,21 +1,26 @@
 "use client";
 import { useEffect, useState } from "react";
 import Button from "./ui/Button";
-import TableHeader from "./ui/TableHeader";
-import TableBody from "./ui/TableBody";
+// import TableHeader from "./ui/TableHeader";
+// import TableBody from "./ui/TableBody";
+import Card from "./Card";
 import RefreshIcon from "./svg/RefreshIcon";
 import { SearchInput } from "./ui/SearchInput";
+
 
 interface DataType {
     first_name: string;
     last_name: string;
     email: string;
-    phone_number: string;
+    phone_number: number;
+    discord: string; // discord unique identifier, we might wanna fetch the data from unique ID, rather than discord name, in such cases where the users might change name, or have the same name. Tårdine 2025
+    attendance: boolean;
 }
 
 const Table = () => {
-    const tableHeaderList = ["Name", "Email", "Phone", "Attendance", "Discord"];
+    // const tableHeaderList = ["Name", "Email", "Phone", "Attendance", "Discord"];
     const [data, setData] = useState<DataType[]>([]);
+    const [searchTerm, setSearchTerm] = useState('')
     // const fetchData = async () => {
     //     try {
     //         const res = await fetch("/api/test");
@@ -30,12 +35,17 @@ const Table = () => {
     // };
     const fetchData = () => {  // This is placeholder data, it breaks in the docker container to auto update on hot reload, so im using dummy data as placeholder.
         const placeholderData: DataType[] = [
-            { first_name: "Odd", last_name: "Ss", email: "john.doe@example.com", phone_number: "1234567890" },
-            { first_name: "FoxMaccloudNeedSMoreCharactersToTestForLimit", last_name: "foobar", email: "System@example.com", phone_number: "987292929" },
-            { first_name: "AARONSWARTZ", last_name: "RSS", email: "Aaron@Swartz.com", phone_number: "+47 912 29 389" },
+            { first_name: "Odd", last_name: "Ss", email: "john.doe@example.com", phone_number: 1234567890, attendance: false, discord: "Rupee" },
+            { first_name: "FoxMaccloudNeedSMoreCharactersToTestForLimit", last_name: "foobar", email: "System@example.com", phone_number: 987292929, attendance: true, discord: "Harold van Oberman" },
+            { first_name: "AARONSWARTZ", last_name: "RSS", email: "Aaron@Swartz.com", phone_number: 4791229389, attendance: true, discord: "Jaliii [Tech:Dev]" },
         ];
         setData(placeholderData);
     };
+
+    const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchTerm(event.target.value)
+    }
+
 
     useEffect(() => {
         fetchData();
@@ -49,12 +59,25 @@ const Table = () => {
 
     return (
         <div>
-            <div className="flex justify-end">
+            <div className="flex justify-end items-center gap-2">
                 {/* The button is placed inside the table component due to client-side rendering requirements. */}
-                <Button handleOnClick={handleOnClick} className="" icon={<RefreshIcon />} />
-                <SearchInput className="" type="" property="" />
+                <SearchInput
+                    type="text"
+                    placeholder="Search..."
+                    value={searchTerm}
+                    onChange={handleSearch}
+                    className="w-full" />
+                <Button handleOnClick={handleOnClick} className="" icon={<RefreshIcon />} buttonName="Refresh data" />
             </div>
-            <table className="border-collapse border border-gray-400">
+            <div>
+                {data.map((crewMember, index) => (
+                    <Card key={index}
+                        firstName={crewMember.first_name} lastName={crewMember.last_name} discord={crewMember.discord} email={crewMember.email} attendance={crewMember.attendance} phoneNumber={crewMember.phone_number} />
+                ))}
+            </div>
+
+
+            {/* <table className="border-collapse border border-gray-400">
                 <thead>
                     <tr>
                         {tableHeaderList.map((text) => (
@@ -71,7 +94,7 @@ const Table = () => {
                         </tr>
                     ))}
                 </tbody>
-            </table>
+            </table> */}
         </div>
     );
 };
