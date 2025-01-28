@@ -1,9 +1,9 @@
 import * as React from "react"
 
-export interface SearchInputProps
+interface SearchInputProps
     extends React.InputHTMLAttributes<HTMLInputElement> {
     className: string;
-}
+};
 
 const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
     ({ className, type, ...props }, ref) => {
@@ -18,6 +18,8 @@ const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
         )
     }
 )
+
 SearchInput.displayName = "SearchInput"
 
 export { SearchInput }
+

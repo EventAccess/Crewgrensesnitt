@@ -7,7 +7,7 @@ const Card = ({
     email
 }: {
     firstName: string;
-    lastName: string,
+    lastName: string;
     phoneNumber: number;
     discord: string;
     attendance: boolean;

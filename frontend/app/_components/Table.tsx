@@ -13,14 +13,30 @@ interface DataType {
     last_name: string;
     email: string;
     phone_number: number;
-    discord: string; // discord unique identifier, we might wanna fetch the data from unique ID, rather than discord name, in such cases where the users might change name, or have the same name. Tårdine 2025
+    discord: string;
     attendance: boolean;
 }
 
+
+
 const Table = () => {
+    const [data, setData] = useState<DataType[]>([]); // use state, updates the variable data, with setData.
+    const [searchTerm, setSearchTerm] = useState(''); // use state updates the variable searchTerm with the function setSearchTerm
+
+    const filteredList = data.filter((item) =>
+        item.first_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        item.last_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        item.discord.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
+    console.log(filteredList)
+
+    //  if searchTerm is equal to data. Show the filtered data.
+
+
+
     // const tableHeaderList = ["Name", "Email", "Phone", "Attendance", "Discord"];
-    const [data, setData] = useState<DataType[]>([]);
-    const [searchTerm, setSearchTerm] = useState('')
+
     // const fetchData = async () => {
     //     try {
     //         const res = await fetch("/api/test");
@@ -42,9 +58,9 @@ const Table = () => {
         setData(placeholderData);
     };
 
-    const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setSearchTerm(event.target.value)
-    }
+
+
+
 
 
     useEffect(() => {
@@ -55,7 +71,7 @@ const Table = () => {
         fetchData(); // Reuse fetchData for the refresh button
     };
 
-    console.table(data);
+    // console.table(data);
 
     return (
         <div>
@@ -65,12 +81,12 @@ const Table = () => {
                     type="text"
                     placeholder="Search..."
                     value={searchTerm}
-                    onChange={handleSearch}
+                    onChange={(foo) => setSearchTerm(foo.target.value)}
                     className="w-full" />
                 <Button handleOnClick={handleOnClick} className="" icon={<RefreshIcon />} buttonName="Refresh data" />
             </div>
             <div>
-                {data.map((crewMember, index) => (
+                {filteredList.map((crewMember, index) => (
                     <Card key={index}
                         firstName={crewMember.first_name} lastName={crewMember.last_name} discord={crewMember.discord} email={crewMember.email} attendance={crewMember.attendance} phoneNumber={crewMember.phone_number} />
                 ))}
