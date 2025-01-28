@@ -23,10 +23,12 @@ const Table = () => {
     const [data, setData] = useState<DataType[]>([]); // use state, updates the variable data, with setData.
     const [searchTerm, setSearchTerm] = useState(''); // use state updates the variable searchTerm with the function setSearchTerm
 
-    const filteredList = data.filter((item) =>
-        item.first_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    const filteredList = data.filter((item) => //Filtered search list, for the input field.
+        item.first_name.toLowerCase().includes(searchTerm.toLowerCase()) || //changes the item first name to lowercase, ensuring case sensetivity wont be an issue.
         item.last_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        item.discord.toLowerCase().includes(searchTerm.toLowerCase())
+        item.discord.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        String(item.phone_number).toLowerCase().includes(searchTerm.toLowerCase()) || // Convert number to string. We set phone number as an number prop, than we convert it here to a string.
+        (item.attendance ? "here" : "gone").toLowerCase().includes(searchTerm.toLowerCase()) // Convert boolean to string, Sorry for the trash code. I dont know how to do it another way.
     );
 
     console.log(filteredList)
