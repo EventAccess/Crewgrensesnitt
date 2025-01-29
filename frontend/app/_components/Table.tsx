@@ -27,8 +27,10 @@ const Table = () => {
         item.first_name.toLowerCase().includes(searchTerm.toLowerCase()) || //changes the item first name to lowercase, ensuring case sensetivity wont be an issue.
         item.last_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         item.discord.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        item.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
         String(item.phone_number).toLowerCase().includes(searchTerm.toLowerCase()) || // Convert number to string. We set phone number as an number prop, than we convert it here to a string.
         (item.attendance ? "here" : "gone").toLowerCase().includes(searchTerm.toLowerCase()) // Convert boolean to string, Sorry for the trash code. I dont know how to do it another way.
+        // The Ux designer, told us that we should add a check box, outside the search bar, so feel free to remove, 'here' and 'gone' keywords at one point, as they are not inuative.
     );
 
     console.log(filteredList)
