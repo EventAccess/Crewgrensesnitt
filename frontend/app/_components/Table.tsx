@@ -6,6 +6,8 @@ import Button from "./ui/Button";
 import Card from "./Card";
 import RefreshIcon from "./svg/RefreshIcon";
 import { SearchInput } from "./ui/SearchInput";
+import { Bounce, ToastContainer, toast } from "react-toastify";
+
 
 
 interface DataType {
@@ -30,16 +32,11 @@ const Table = () => {
         item.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
         String(item.phone_number).toLowerCase().includes(searchTerm.toLowerCase()) || // Convert number to string. We set phone number as an number prop, than we convert it here to a string.
         (item.attendance ? "here" : "gone").toLowerCase().includes(searchTerm.toLowerCase()) // Convert boolean to string, Sorry for the trash code. I dont know how to do it another way.
-        // The Ux designer, told us that we should add a check box, outside the search bar, so feel free to remove, 'here' and 'gone' keywords at one point, as they are not inuative.
+        // The Ux designer{gay renate}, told us that we should add a check box outside the search bar. Feel free to remove, 'here' and 'gone' keywords at one point, as they are not inuative.
     );
-
-    console.log(filteredList)
 
     //  if searchTerm is equal to data. Show the filtered data.
 
-
-
-    // const tableHeaderList = ["Name", "Email", "Phone", "Attendance", "Discord"];
 
     // const fetchData = async () => {
     //     try {
@@ -62,32 +59,38 @@ const Table = () => {
         setData(placeholderData);
     };
 
-
-
-
-
-
     useEffect(() => {
         fetchData();
     }, []);
 
     const handleOnClick = () => {
+        toast.success('Wopler fetched you new data', {
+            position: "bottom-right",
+            autoClose: 1100,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+            transition: Bounce,
+        });
         fetchData(); // Reuse fetchData for the refresh button
     };
 
     // console.table(data);
 
     return (
-        <div>
+        <div className="p-10">
             <div className="flex justify-end items-center gap-2">
-                {/* The button is placed inside the table component due to client-side rendering requirements. */}
+                {/* The button is placed inside the tabsle component due to client-side rendering requirements. */}
                 <SearchInput
                     type="text"
                     placeholder="Search..."
                     value={searchTerm}
                     onChange={(foo) => setSearchTerm(foo.target.value)}
                     className="w-full" />
-                <Button handleOnClick={handleOnClick} className="" icon={<RefreshIcon />} buttonName="Refresh data" />
+                <Button handleOnClick={handleOnClick} className="border border-[#A0F0FF] text-[#A0F0FF] hover:bg-[#2A2A40]" icon={<RefreshIcon />} buttonName="Refresh data" />
             </div>
             <div>
                 {filteredList.map((crewMember, index) => (
@@ -95,28 +98,25 @@ const Table = () => {
                         firstName={crewMember.first_name} lastName={crewMember.last_name} discord={crewMember.discord} email={crewMember.email} attendance={crewMember.attendance} phoneNumber={crewMember.phone_number} />
                 ))}
             </div>
-
-
-            {/* <table className="border-collapse border border-gray-400">
-                <thead>
-                    <tr>
-                        {tableHeaderList.map((text) => (
-                            <TableHeader key={text} headerText={text} />
-                        ))}
-                    </tr>
-                </thead>
-                <tbody>
-                    {data.map((item, index) => (
-                        <tr key={index}>
-                            <TableBody text={`${item.first_name} ${item.last_name}`} />
-                            <TableBody text={item.email} />
-                            <TableBody text={item.phone_number} />
-                        </tr>
-                    ))}
-                </tbody>
-            </table> */}
+            <ToastContainer
+                position="bottom-right"
+                autoClose={1000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="dark"
+                transition={Bounce}
+            />
         </div>
     );
 };
+
+
+
+
 
 export default Table;
