@@ -38,26 +38,27 @@ const Table = () => {
     //  if searchTerm is equal to data. Show the filtered data.
 
 
-    // const fetchData = async () => {
-    //     try {
-    //         const res = await fetch("/api/test");
-    //         if (!res.ok) {
-    //             throw new Error("Failed to fetch data");
-    //         }
-    //         const result = await res.json();
-    //         setData(result);
-    //     } catch (error) {
-    //         console.error("Error fetching data:", error);
-    //     }
-    // };
-    const fetchData = () => {  // This is placeholder data, it breaks in the docker container to auto update on hot reload, so im using dummy data as placeholder.
-        const placeholderData: DataType[] = [
-            { first_name: "Odd", last_name: "Ss", email: "john.doe@example.com", phone_number: 1234567890, attendance: false, discord: "Rupee" },
-            { first_name: "FoxMaccloudNeedSMoreCharactersToTestForLimit", last_name: "foobar", email: "System@example.com", phone_number: 987292929, attendance: true, discord: "Harold van Oberman" },
-            { first_name: "AARONSWARTZ", last_name: "RSS", email: "Aaron@Swartz.com", phone_number: 4791229389, attendance: true, discord: "Jaliii [Tech:Dev]" },
-        ];
-        setData(placeholderData);
+    const fetchData = async () => {
+        try {
+            const res = await fetch("/api/test");
+            if (!res.ok) {
+                throw new Error("Failed to fetch data");
+            }
+            const result = await res.json();
+            setData(result);
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
     };
+    // THIS ENTIRE LINE UNDER IS USED FOR TESTING IN NPM RUN DEV, IT DOES NOT REQUIRE DOCKER TO BE BUILT AND RUN CHANGED DATA.
+    // const fetchData = () => {  // This is placeholder data, it breaks in the docker container to auto update on hot reload, so im using dummy data as placeholder.
+    //     const placeholderData: DataType[] = [
+    //         { first_name: "Odd", last_name: "Ss", email: "john.doe@example.com", phone_number: 1234567890, attendance: false, discord: "Rupee" },
+    //         { first_name: "FoxMaccloudNeedSMoreCharactersToTestForLimit", last_name: "foobar", email: "System@example.com", phone_number: 987292929, attendance: true, discord: "Harold van Oberman" },
+    //         { first_name: "AARONSWARTZ", last_name: "RSS", email: "Aaron@Swartz.com", phone_number: 4791229389, attendance: true, discord: "Jaliii [Tech:Dev]" },
+    //     ];
+    //     setData(placeholderData);
+    // };
 
     useEffect(() => {
         fetchData();
