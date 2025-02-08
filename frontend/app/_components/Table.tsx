@@ -90,7 +90,9 @@ const Table = () => {
                     value={searchTerm}
                     onChange={(foo) => setSearchTerm(foo.target.value)}
                     className="w-full" />
-                <Button handleOnClick={handleOnClick} className="border border-[#A0F0FF] text-[#A0F0FF] hover:bg-[#2A2A40]" icon={<RefreshIcon />} buttonName="Refresh data" />
+            </div>
+            <div className="py-2">
+                <Button handleOnClick={handleOnClick} className="borderborder-[#A0F0FF] text-[#A0F0FF] hover:bg-[#0f0f1f] w-full gap-2 items-center justify-center" icon={<RefreshIcon />} buttonName="Refresh data" />
             </div>
             <div>
                 {filteredList.map((crewMember, index) => (
