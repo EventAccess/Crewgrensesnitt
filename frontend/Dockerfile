@@ -28,7 +28,7 @@ COPY . .
 
 RUN npm run build
 
-FROM ghcr.io/static-web-server/static-web-server:2.36.0 AS static-server
+FROM ghcr.io/static-web-server/static-web-server:2.36.1 AS static-server
 
 WORKDIR /srv/http
 ENV SERVER_ROOT=/srv/http
