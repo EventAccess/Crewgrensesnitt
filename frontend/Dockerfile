@@ -1,4 +1,4 @@
-FROM node:22-bookworm AS base
+FROM node:24-bookworm AS base
 
 # Next.js collects completely anonymous telemetry data about general usage.
 # Learn more here: https://nextjs.org/telemetry
